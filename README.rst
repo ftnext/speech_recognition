@@ -170,8 +170,10 @@ You can install it with ``python3 -m pip install SpeechRecognition[vosk]``.
 
 You also have to install Vosk Models:
 
-`Here <https://alphacephei.com/vosk/models>`__ are models available for download. You have to place them in the ``model`` directory of your project, like "your-project-folder/model".
-You can also run ``sprc download vosk`` to download the default model.
+Run ``sprc download vosk`` to download the default model (vosk-model-small-en-us).
+The model is placed in the ``models/vosk`` directory of the installed ``speech_recognition`` package, which is the only location ``recognize_vosk`` reads.
+
+To use another model from `here <https://alphacephei.com/vosk/models>`__, pass its zip URL: ``sprc download vosk --url <model zip URL>``.
 
 Google Cloud Speech Library for Python (for Google Cloud Speech-to-Text API users)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

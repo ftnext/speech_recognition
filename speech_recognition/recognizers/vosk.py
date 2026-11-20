@@ -32,7 +32,7 @@ def recognize(
     """
     Perform speech recognition on ``audio_data`` using Vosk.
 
-    Requires the Vosk model to be downloaded and unpacked in a folder named 'model' (``$PWD/model``).
+    Requires the Vosk model to be downloaded with ``sprc download vosk``, which places it in the ``models/vosk`` directory of the installed ``speech_recognition`` package.
 
     If ``verbose`` is ``False`` (default), only the recognized text is returned.
     If ``verbose`` is ``True``, the parsed result dictionary from Vosk is returned.
