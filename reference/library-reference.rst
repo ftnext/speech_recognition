@@ -4,60 +4,17 @@ Speech Recognition Library Reference
 ``Microphone(device_index: Union[int, None] = None, sample_rate: Union[int, None] = None, chunk_size: int = 1024) -> Microphone``
 ---------------------------------------------------------------------------------------------------------------------------------
 
-Creates a new ``Microphone`` instance, which represents a physical microphone on the computer. Subclass of ``AudioSource``.
-
-This will throw an ``AttributeError`` if you don't have PyAudio (0.2.11 or later) installed.
-
-If ``device_index`` is unspecified or ``None``, the default microphone is used as the audio source. Otherwise, ``device_index`` should be the index of the device to use for audio input.
-
-A device index is an integer between 0 and ``pyaudio.get_device_count() - 1`` (assume we have used ``import pyaudio`` beforehand) inclusive. It represents an audio device such as a microphone or speaker. See the `PyAudio documentation <http://people.csail.mit.edu/hubert/pyaudio/docs/>`__ for more details.
-
-The microphone audio is recorded in chunks of ``chunk_size`` samples, at a rate of ``sample_rate`` samples per second (Hertz). When ``sample_rate`` is omitted or ``None``, the selected input device's default sample rate is used.
-
-Higher ``sample_rate`` values result in better audio quality, but also more bandwidth (and therefore, slower recognition). Additionally, some machines, such as some Raspberry Pi models, can't keep up if this value is too high.
-
-Higher ``chunk_size`` values help avoid triggering on rapidly changing ambient noise, but also makes detection less sensitive. This value, generally, should be left at its default.
-
-Instances of this class are context managers, and are designed to be used with ``with`` statements:
-
-.. code:: python
-
-    with Microphone() as source:    # open the microphone and start recording
-        pass                        # do things here - ``source`` is the Microphone instance created above
-                                    # the microphone is automatically released at this point
+.. autoclass:: speech_recognition.Microphone
 
 ``Microphone.list_microphone_names() -> List[str]``
 ---------------------------------------------------
 
-Returns a list of the names of all available microphones. For microphones where the name can't be retrieved, the list entry contains ``None`` instead.
-
-The index of each microphone's name in the returned list is the same as its device index when creating a ``Microphone`` instance - if you want to use the microphone at index 3 in the returned list, use ``Microphone(device_index=3)``.
-
-To create a ``Microphone`` instance by name:
-
-.. code:: python
-
-    m = None
-    for i, microphone_name in enumerate(Microphone.list_microphone_names()):
-        if microphone_name == "HDA Intel HDMI: 0 (hw:0,3)":
-            m = Microphone(device_index=i)
+.. autofunction:: speech_recognition.Microphone.list_microphone_names
 
 ``Microphone.list_working_microphones() -> Dict[int, str]``
 -----------------------------------------------------------
 
-Returns a dictionary mapping device indices to microphone names, for microphones that are currently hearing sounds. When using this function, ensure that your microphone is unmuted and make some noise at it to ensure it will be detected as working.
-
-Each key in the returned dictionary can be passed to the ``Microphone`` constructor to use that microphone. For example, if the return value is ``{3: "HDA Intel PCH: ALC3232 Analog (hw:1,0)"}``, you can do ``Microphone(device_index=3)`` to use that microphone.
-
-To create a ``Microphone`` instance for the first working microphone:
-
-.. code:: python
-
-    for device_index in Microphone.list_working_microphones():
-        m = Microphone(device_index=device_index)
-        break
-    else:
-        print("No working microphones found!")
+.. autofunction:: speech_recognition.Microphone.list_working_microphones
 
 ``AudioFile(filename_or_fileobject: Union[str, io.IOBase]) -> AudioFile``
 -------------------------------------------------------------------------

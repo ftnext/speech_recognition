@@ -7,7 +7,7 @@ lint:
 rstcheck:
 # PyPI does not support Sphinx directives and roles
 	@pipx run rstcheck README.rst CONTRIBUTING.rst
-	@pipx run rstcheck[sphinx] --ignore-directives autofunction reference/*.rst
+	@pipx run rstcheck[sphinx] --ignore-directives autofunction,autoclass reference/*.rst
 
 typecheck:
 	@mypy --ignore-missing-imports speech_recognition/recognizers tests
