@@ -659,7 +659,8 @@ class Recognizer(AudioSource):
         assert isinstance(language, str), "``language`` must be a string"
 
         result_format = 'detailed'
-        access_token, expire_time = getattr(self, "azure_cached_access_token", None), getattr(self, "azure_cached_access_token_expiry", None)
+        credentials = (key, location)
+        cached_credentials, access_token, expire_time = getattr(self, "_azure_token_cache", (None, None, None))
         allow_caching = True
         try:
             from time import (
@@ -668,7 +669,7 @@ class Recognizer(AudioSource):
         except ImportError:
             expire_time = None  # monotonic time not available, don't cache access tokens
             allow_caching = False  # don't allow caching, since monotonic time isn't available
-        if expire_time is None or monotonic() > expire_time:  # caching not enabled, first credential request, or the access token from the previous one expired
+        if credentials != cached_credentials or expire_time is None or monotonic() > expire_time:
             # get an access token using OAuth
             credential_url = "https://" + location + ".api.cognitive.microsoft.com/sts/v1.0/issueToken"
             credential_request = Request(credential_url, data=b"", headers={
@@ -690,8 +691,7 @@ class Recognizer(AudioSource):
 
             if allow_caching:
                 # save the token for the duration it is valid for
-                self.azure_cached_access_token = access_token
-                self.azure_cached_access_token_expiry = start_time + 600  # according to https://docs.microsoft.com/en-us/azure/cognitive-services/Speech-Service/rest-apis#authentication, the token expires in exactly 10 minutes
+                self._azure_token_cache = (credentials, access_token, start_time + 600)  # according to https://docs.microsoft.com/en-us/azure/cognitive-services/Speech-Service/rest-apis#authentication, the token expires in exactly 10 minutes
 
         wav_data = audio_data.get_wav_data(
             convert_rate=16000,  # audio samples must be 8kHz or 16 kHz
