@@ -25,4 +25,4 @@ class OpenAICompatibleRecognizer:
         transcript = self.client.audio.transcriptions.create(
             file=wav_data, **parameters
         )
-        return transcript.text
+        return transcript if isinstance(transcript, str) else transcript.text
