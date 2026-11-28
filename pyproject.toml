@@ -37,6 +37,7 @@ classifiers = [
   "Topic :: Multimedia :: Sound/Audio :: Speech",
 ]
 dependencies = [
+  "pluggy>=1",
   "typing-extensions",
   "standard-aifc; python_version >= '3.13'",
   "audioop-lts; python_version >= '3.13'",

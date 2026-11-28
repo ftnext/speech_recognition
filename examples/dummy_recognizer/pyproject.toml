@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "speech-recognition-dummy-plugin"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["SpeechRecognition"]
+
+[project.entry-points.speech_recognition]
+dummy = "speech_recognition_dummy_plugin"
+
+[tool.setuptools]
+py-modules = ["speech_recognition_dummy_plugin"]
