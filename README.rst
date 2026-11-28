@@ -222,7 +222,9 @@ OpenAI-compatible self-hosted Whisper endpoints (for users of vLLM, Ollama, etc.
 
 ``recognizer_instance.recognize_openai`` also supports OpenAI-compatible endpoints.
 
-Set ``OPENAI_BASE_URL`` to point to your custom endpoint with dummy ``OPENAI_API_KEY``.
+Set ``OPENAI_BASE_URL`` to the provider's API base URL and ``OPENAI_API_KEY`` to the provider's key. For endpoints that do not require authentication, use a non-empty dummy key.
+
+See the `OpenAI-compatible audio transcription guide <https://github.com/Uberi/speech_recognition/blob/master/guides/openai-compatible-transcription.rst>`__ for setup and examples.
 
 Groq Whisper API (for Groq Whisper API users)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
